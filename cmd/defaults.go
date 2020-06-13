@@ -9,6 +9,9 @@ var ReasonTemplates = []string{
 	"This is a safe space and you can't just use the word \"%s\" like that",
 	"Please don't say \"%s\", this is a christian discord server",
 	"AHHHHH WTF YOU SAID \"%s\"",
+	"AHH MOTHAFUCKA I KNEW IT WAS YOU THAT SAID \"%s\"",
+	"I forbid you to say \"%s\", get rekt",
+	"Pwease don't say \"%s\" senpai <<3. ~UwU~ xD",
 }
 
 var ApologyTemplates = []string{
