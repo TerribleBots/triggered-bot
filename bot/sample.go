@@ -10,17 +10,22 @@ import (
 	. "triggered-bot/log"
 )
 
-func SampleWords(sourceFile, includeFile string, sampleRatio float64) []string {
-	words, err := readLines(sourceFile)
+type Sampler struct {
+	SourceFile, IncludeFile string
+	SampleRatio             float64
+}
+
+func (s *Sampler) SampleWords() []string {
+	words, err := readLines(s.SourceFile)
 	if err != nil {
-		Log.Fatalf("unable to sample words: %s", err)
+		Log.Errorf("unable to sample words: %s", err)
 	}
 
 	rand.Shuffle(len(words), func(i, j int) { words[i], words[j] = words[j], words[i] })
-	n := int(math.Round(sampleRatio * float64(len(words))))
+	n := int(math.Round(s.SampleRatio * float64(len(words))))
 	words = words[:n]
 	Log.Info(zap.Strings("words", words))
-	return append(words, include(includeFile)...)
+	return append(words, include(s.IncludeFile)...)
 }
 
 func readLines(file string) ([]string, error) {

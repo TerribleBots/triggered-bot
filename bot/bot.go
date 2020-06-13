@@ -3,11 +3,13 @@ package bot
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"github.com/go-co-op/gocron"
 	"math/rand"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
+	"time"
 	. "triggered-bot/log"
 )
 
@@ -15,6 +17,7 @@ type Bot struct {
 	Token                             string
 	ReasonTemplates, ApologyTemplates []string
 	Matcher                           Matcher
+	Sampler                           Sampler
 }
 
 func (b *Bot) Run() {
@@ -30,9 +33,22 @@ func (b *Bot) Run() {
 	}
 
 	defer dg.Close()
+	sched := gocron.NewScheduler(time.UTC)
+	_, err = sched.Every(1).Day().Do(b.refreshWords)
+
+	if err != nil {
+		Log.Fatal(err)
+	}
+
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
+}
+
+func (b *Bot) refreshWords() {
+	Log.Info("Refreshing trigger words")
+	words := b.Sampler.SampleWords()
+	b.Matcher.SetWords(words)
 }
 
 func (b *Bot) messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {

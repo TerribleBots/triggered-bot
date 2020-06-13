@@ -4,6 +4,7 @@ import "strings"
 
 type Matcher interface {
 	Match(content string) string
+	SetWords(source []string)
 }
 
 type SimpleMatcher struct {
@@ -11,6 +12,12 @@ type SimpleMatcher struct {
 }
 
 func NewSimpleMatcher(source []string) *SimpleMatcher {
+	matcher := &SimpleMatcher{}
+	matcher.SetWords(source)
+	return matcher
+}
+
+func (m *SimpleMatcher) SetWords(source []string) {
 	words := make(map[string]interface{})
 
 	var v struct{}
@@ -18,7 +25,7 @@ func NewSimpleMatcher(source []string) *SimpleMatcher {
 		words[s] = v
 	}
 
-	return &SimpleMatcher{words}
+	m.words = words
 }
 
 func (m *SimpleMatcher) Match(content string) string {
