@@ -39,16 +39,17 @@ func (m *SimpleMatcher) SetWords(source []string) {
 func (m *SimpleMatcher) Match(content string) string {
 	for _, word := range strings.Fields(content) {
 		n := text.Normalize(word)
-		if m.isMatch(n) {
+		if m.inWords(n) {
 			return n
+		}
+		if len(n) > 5 {
+			corrected := m.model.SpellCheck(n)
+			if m.inWords(corrected) {
+				return corrected
+			}
 		}
 	}
 	return ""
-}
-
-func (m *SimpleMatcher) isMatch(s string) bool {
-	return m.inWords(s) ||
-		(len(s) > 5 && m.inWords(m.model.SpellCheck(s)))
 }
 
 func (m *SimpleMatcher) inWords(s string) bool {
