@@ -12,12 +12,14 @@ type Matcher interface {
 }
 
 type SimpleMatcher struct {
-	words map[string]interface{}
-	model *fuzzy.Model
+	words   map[string]interface{}
+	model   *fuzzy.Model
+	sampler Sampler
 }
 
-func NewSimpleMatcher(source []string) *SimpleMatcher {
-	matcher := &SimpleMatcher{}
+func NewSimpleMatcher(sampler Sampler) *SimpleMatcher {
+	matcher := &SimpleMatcher{sampler: sampler}
+	source := sampler.SampleWords()
 	matcher.SetWords(source)
 	return matcher
 }
