@@ -3,6 +3,7 @@ package bot
 import (
 	"github.com/sajari/fuzzy"
 	"strings"
+	"triggered-bot/text"
 )
 
 type Matcher interface {
@@ -35,8 +36,9 @@ func (m *SimpleMatcher) SetWords(source []string) {
 
 func (m *SimpleMatcher) Match(content string) string {
 	for _, word := range strings.Fields(content) {
-		if m.isMatch(word) {
-			return word
+		n := text.Normalize(word)
+		if m.isMatch(n) {
+			return n
 		}
 	}
 	return ""
