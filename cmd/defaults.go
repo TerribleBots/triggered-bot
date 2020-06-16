@@ -16,4 +16,9 @@ var ReasonTemplates = []string{
 
 var ApologyTemplates = []string{
 	"Sorry for kicking you, I'm sure you didn't mean to trigger me. Here is an invite back to the channel:\n%s",
+	"~owo so sowwy for kicking you senpai (´・ω・`)\n%s",
+	"I dun goofed when I kicked ya, here is a link to get back in:\n%s",
+	"I have been thinking about my behavior lately and I wanted to sincerely apologize for kicking you.\n" +
+		"I'll be taking some time off to work on myself and reevaluate my role as an easily triggered bot.\n" +
+		"Here is a link to rejoin the server:\n%s",
 }
