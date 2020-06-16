@@ -43,7 +43,8 @@ func (m *SimpleMatcher) Match(content string) string {
 }
 
 func (m *SimpleMatcher) isMatch(s string) bool {
-	return m.inWords(s) || m.inWords(m.model.SpellCheck(s))
+	return m.inWords(s) ||
+		(len(s) > 5 && m.inWords(m.model.SpellCheck(s)))
 }
 
 func (m *SimpleMatcher) inWords(s string) bool {
