@@ -5,11 +5,11 @@ go 1.14
 require (
 	github.com/bwmarrin/discordgo v0.20.3
 	github.com/fsnotify/fsnotify v1.4.9
-	github.com/go-co-op/gocron v0.2.0 // indirect
+	github.com/go-co-op/gocron v0.2.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.3.1 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
-	github.com/sajari/fuzzy v1.0.0 // indirect
+	github.com/sajari/fuzzy v1.0.0
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/cobra v1.0.0

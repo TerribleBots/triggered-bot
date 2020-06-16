@@ -83,12 +83,11 @@ func newBot() *Bot {
 		Log.Fatal("No auth token provided")
 	}
 
-	words := SampleWords(sourceFile, includeFile, sampleRatio)
-
 	return &Bot{
 		Token:            token,
 		ApologyTemplates: GetStringSlice("apology-templates"),
 		ReasonTemplates:  GetStringSlice("reason-templates"),
 		Matcher:          NewSimpleMatcher(words),
+		Sampler:          NewSampler(sourceFile, includeFile, sampleRatio),
 	}
 }

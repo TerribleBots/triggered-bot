@@ -15,6 +15,10 @@ type Sampler struct {
 	SampleRatio             float64
 }
 
+func NewSampler(SourceFile, IncludeFile string, SampleRatio float64) Sampler {
+	return Sampler{SourceFile, IncludeFile, SampleRatio}
+}
+
 func (s *Sampler) SampleWords() []string {
 	words, err := readLines(s.SourceFile)
 	if err != nil {
