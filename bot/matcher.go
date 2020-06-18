@@ -7,8 +7,12 @@ import (
 )
 
 type Matcher interface {
-	Match(content string) string
+	Match(content string) MatchResult
 	SetWords(source []string)
+}
+
+type MatchResult struct {
+	matches, approximates []string
 }
 
 type SimpleMatcher struct {
@@ -36,25 +40,29 @@ func (m *SimpleMatcher) SetWords(source []string) {
 	m.model = newModel(source)
 }
 
-func (m *SimpleMatcher) Match(content string) string {
+func (m *SimpleMatcher) Match(content string) MatchResult {
+	var matches, approximate []string
 	for _, word := range strings.Fields(content) {
 		n := text.Normalize(word)
 		if m.inWords(n) {
-			return n
-		}
-		if len(n) > 5 {
+			matches = append(matches, n)
+		} else if len(n) > 5 {
 			corrected := m.model.SpellCheck(n)
 			if m.inWords(corrected) {
-				return corrected
+				approximate = append(approximate, corrected)
 			}
 		}
 	}
-	return ""
+	return MatchResult{matches, approximate}
 }
 
 func (m *SimpleMatcher) inWords(s string) bool {
 	_, ok := m.words[s]
 	return ok
+}
+
+func (m MatchResult) AnyMatch() bool {
+	return len(m.matches) > 0 || len(m.approximates) > 0
 }
 
 func newModel(words []string) *fuzzy.Model {

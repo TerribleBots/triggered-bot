@@ -52,6 +52,7 @@ func init() {
 	rootCmd.Flags().Float64Var(&sampleRatio, "sample-ratio", .10, "percentage of words to be randomly sampled by source")
 	SetDefault("reason-templates", ReasonTemplates)
 	SetDefault("apology-templates", ApologyTemplates)
+	SetDefault("approx-templates", ApproximateReasonTemplates)
 }
 
 func initConfig() {
@@ -89,6 +90,7 @@ func newBot() *Bot {
 		Token:            token,
 		ApologyTemplates: GetStringSlice("apology-templates"),
 		ReasonTemplates:  GetStringSlice("reason-templates"),
+		ApproxTemplates:  GetStringSlice("approx-templates"),
 		Matcher:          NewSimpleMatcher(sampler),
 	}
 }
