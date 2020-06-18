@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"os"
 	. "triggered-bot/log"
+	"triggered-bot/text"
 )
 
 type Sampler struct {
@@ -45,21 +46,7 @@ func readLines(file string) ([]string, error) {
 		lines = append(lines, scanner.Text())
 	}
 
-	return removeDuplicates(lines), scanner.Err()
-}
-
-func removeDuplicates(lines []string) []string {
-	var out []string
-	seen := make(map[string]interface{})
-	var v struct{}
-	for _, s := range lines {
-		if _, ok := seen[s]; !ok {
-			out = append(out, s)
-			seen[s] = v
-		}
-	}
-
-	return out
+	return text.RemoveDuplicates(lines), scanner.Err()
 }
 
 func include(includeFile string) []string {

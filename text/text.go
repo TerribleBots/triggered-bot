@@ -17,3 +17,17 @@ func Normalize(candidate string) string {
 func Overriden(msg string) bool {
 	return strings.HasPrefix(msg, OverrideText)
 }
+
+func RemoveDuplicates(lines []string) []string {
+	var out []string
+	seen := make(map[string]interface{})
+	var v struct{}
+	for _, s := range lines {
+		if _, ok := seen[s]; !ok {
+			out = append(out, s)
+			seen[s] = v
+		}
+	}
+
+	return out
+}

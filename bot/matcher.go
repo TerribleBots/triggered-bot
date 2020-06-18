@@ -53,7 +53,10 @@ func (m *SimpleMatcher) Match(content string) MatchResult {
 			}
 		}
 	}
-	return MatchResult{matches, approximate}
+	return MatchResult{
+		text.RemoveDuplicates(matches),
+		text.RemoveDuplicates(approximate),
+	}
 }
 
 func (m *SimpleMatcher) inWords(s string) bool {
