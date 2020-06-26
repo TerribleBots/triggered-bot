@@ -44,6 +44,8 @@ func (b *Bot) Run() {
 		Log.Fatal(err)
 	}
 
+	sched.StartAsync()
+
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
