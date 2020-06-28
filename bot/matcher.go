@@ -9,6 +9,7 @@ import (
 type Matcher interface {
 	Match(content string) MatchResult
 	SetWords(source []string)
+	GetSampler() *Sampler
 }
 
 type MatchResult struct {
@@ -18,14 +19,19 @@ type MatchResult struct {
 type SimpleMatcher struct {
 	words   map[string]interface{}
 	model   *fuzzy.Model
-	sampler Sampler
+	sampler *Sampler
 }
 
-func NewSimpleMatcher(sampler Sampler) *SimpleMatcher {
-	matcher := &SimpleMatcher{sampler: sampler}
+func NewSimpleMatcher(sampler *Sampler) *SimpleMatcher {
+	matcher := &SimpleMatcher{}
+	matcher.sampler = sampler
 	source := sampler.SampleWords()
 	matcher.SetWords(source)
 	return matcher
+}
+
+func (s *SimpleMatcher) GetSampler() *Sampler {
+	return s.sampler
 }
 
 func (m *SimpleMatcher) SetWords(source []string) {

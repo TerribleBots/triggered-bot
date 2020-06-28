@@ -21,7 +21,6 @@ type Bot struct {
 	Token                                              string
 	ReasonTemplates, ApproxTemplates, ApologyTemplates []string
 	Matcher                                            Matcher
-	Sampler                                            Sampler
 }
 
 func (b *Bot) Run() {
@@ -53,7 +52,7 @@ func (b *Bot) Run() {
 
 func (b *Bot) refreshWords() {
 	Log.Info("Refreshing trigger words")
-	words := b.Sampler.SampleWords()
+	words := b.Matcher.GetSampler().SampleWords()
 	b.Matcher.SetWords(words)
 }
 
